@@ -50,18 +50,33 @@ function printGameboard() {
 function createCard(cardData) {
     var card = document.createElement("div")
     card.classList = "flexItem"
-    card.innerText = cardData.key
+    /* card.innerText = cardData.key */
     card.addEventListener("click", showImage)
 
     function showImage() {
         var image = document.createElement("img")
         image.classList = "image"
         image.src = cardData.hiddenImg
-        console.log(image.src)
+        card.classList = "flipCard"
+        image.addEventListener("click", hiddenImg)
+    
         card.appendChild(image)
     }
-    return card
 
+    function hiddenImg() {
+        card.innerText = ""
+        card.classList = "flipCard"
+        if (cardData.key == cardData.key) {
+            turnBack()
+        }
+    }
+
+    return card
+}
+
+function turnBack() {
+    var newCard = document.getElementsByName("div")
+    newCard.classList = "flexItem"
 }
 
 function shuffle(cardList) {
@@ -72,6 +87,3 @@ function shuffle(cardList) {
     setTimeout(createCard(cardData), 3000)
 } */
 
-function hiddenImg() {
-
-}
