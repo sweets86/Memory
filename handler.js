@@ -23,6 +23,10 @@ var memoryCards = [
     }
 ]
 
+var flippedCard
+var waitngForTimeout = false
+var winCounter = 0
+
 function initSite() {
     printGameboard()
 }
@@ -31,11 +35,14 @@ function printGameboard() {
     var container = document.createElement("div")
     container.classList = "container"
 
+    var idCounter = 0
     var cardList = []
 
     for (i = 0; i < memoryCards.length; i++) {
-        cardList.push(createCard(memoryCards[i]))
-        cardList.push(createCard(memoryCards[i]))
+        cardList.push(createCard(memoryCards[i], idCounter))
+        idCounter++
+        cardList.push(createCard(memoryCards[i], idCounter))
+        idCounter++
     }
 
     cardList = shuffle(cardList)
@@ -47,43 +54,97 @@ function printGameboard() {
     document.body.appendChild(container)
 }
 
-function createCard(cardData) {
+function createCard(cardData, idCounter) {
     var card = document.createElement("div")
     card.classList = "flexItem"
-    /* card.innerText = cardData.key */
-    card.addEventListener("click", showImage)
+    card.data = cardData
+    card.id = idCounter
 
-    function showImage() {
-        var image = document.createElement("img")
-        image.classList = "image"
-        image.src = cardData.hiddenImg
-        card.classList = "flipCard"
-        image.addEventListener("click", hiddenImg)
-    
-        card.appendChild(image)
-    }
+    card.onclick = (event) => {
 
-    function hiddenImg() {
-        card.innerText = ""
-        card.classList = "flipCard"
-        if (cardData.key == cardData.key) {
-            turnBack()
+        if(waitngForTimeout) {
+            console.log("Waiting...")
+            return
+        } 
+
+        var card = event.srcElement
+
+        if (flippedCard && card.id == flippedCard.id) {
+            console.log("Samma kort tryckt igen")
+            return
         }
-    }
 
+        flipCard(card)
+
+        if (flippedCard) {
+            console.log("Det finns ett vänt kort sedan innan")
+            if (flippedCard.data.key == card.data.key) {
+                //match finns. Ta bort onclick ifrån card och flippedCard
+                card.onclick = ""
+                flippedCard.onclick = ""
+                flippedCard = undefined
+                winCounter = winCounter + 1
+                console.log("MATCH", winCounter)
+            } else {
+                console.log("INGEN MATCH")
+
+                waitngForTimeout = true
+                setTimeout(() => {
+                    flipBackCard(card)
+                    flipBackCard(flippedCard)
+                    flippedCard = undefined
+                    waitngForTimeout = false
+                }, 2000);
+                // Ingen match. Vänd tillbaka flippedCard och card efter 2 sek
+            }
+        } else {
+            console.log("Fösta kortet har vänts")
+            // Vänd card
+            flippedCard = card
+        }
+
+        if (winCounter == 6) {
+           var winnerContainer = document.createElement("div")
+           winnerContainer.classList = "winnerContainer"
+
+           var winnerText = document.createElement("h1")
+           winnerText.innerText = "CONGRATULATIONS!"
+           winnerText.classList = "h1"
+
+           var winnerTextOne = document.createElement("h3")
+           winnerTextOne.innerText = "You Wan!"
+           winnerTextOne.classList = "h3"
+
+           var startButton = document.createElement("button")
+           startButton.innerText = "Start Game"
+           startButton.classList = "button"
+           startButton.onclick = function() {
+               initSite()
+           }
+           
+           console.log(winCounter)
+           winnerContainer.appendChild(startButton)
+           winnerContainer.appendChild(winnerTextOne)
+           winnerContainer.appendChild(winnerText)
+           document.body.appendChild(winnerContainer)
+        }
+        
+    }
+    
     return card
 }
 
-function turnBack() {
-    var newCard = document.getElementsByName("div")
-    newCard.classList = "flexItem"
+function flipCard(card) {
+    card.style.background = "url(" + card.data.hiddenImg + ")"
+    card.style.backgroundColor = "white"
+}
+
+function flipBackCard(card) {
+    card.style.background = ""
+    card.style.backgroundColor = "lightBlue"
 }
 
 function shuffle(cardList) {
     return cardList.sort(() => Math.random() - 0.5);
 }
-
-/* function setTime() {
-    setTimeout(createCard(cardData), 3000)
-} */
 
