@@ -9,6 +9,8 @@ html {
 body {
     position: relative;
     margin: 0;
+    width: 100vw;
+    height: 100vh;
 }
 
 .container {
@@ -18,8 +20,8 @@ body {
     width: 100vw;
     height: 100vh;
     display: grid;
-    grid-template-rows: 2fr 2fr 2fr;
-    grid-template-columns: 2fr 2fr 2fr 2fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 2rem;
 }
 
@@ -50,4 +52,24 @@ body {
     flex-direction: column;
     width: 100vw;
     height: 100vh;
+}
+
+@media screen and (max-width: 700px) and (min-width: 400px) {
+    .flexItem {
+        height: 50%;
+    }
+    
+    .container {
+        gap: 0em;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .flexItem {
+        height: 50%;
+    }
+
+    .container {
+        gap: 0em;
+    }
 }
