@@ -139,7 +139,8 @@ function createCard(cardData, idCounter) {
 
 function flipCard(card) {
     card.style.background = "url(" + card.data.hiddenImg + ")"
-    card.style.backgroundColor = "white"
+    card.style.backgroundSize = "cover"
+    card.style.backgroundPosition = "center"
 }
 
 function flipBackCard(card) {
