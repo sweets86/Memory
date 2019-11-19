@@ -3,22 +3,22 @@
 
 var memoryCards = [
     {
-        hiddenImg: "image/emojiChock.jpg",
+        hiddenImg: "./image/emojiChock.jpg",
         key: 0
     }, {
-        hiddenImg: "image/emojiGhost.jpg",
+        hiddenImg: "./image/emojiGhost.jpg",
         key: 1
     }, {
-        hiddenImg: "image/emojiKiss.jpg",
+        hiddenImg: "./image/emojiKiss.jpg",
         key: 2
     }, {
-        hiddenImg: "image/emojiLove.jpg",
+        hiddenImg: "./image/emojiLove.jpg",
         key: 3
     }, {
-        hiddenImg: "image/emojiNinja.jpg",
+        hiddenImg: "./image/emojiNinja.jpg",
         key: 4
     }, {
-        hiddenImg: "image/emojiTrick.jpg",
+        hiddenImg: "./image/emojiTrick.jpg",
         key: 5
     }
 ]
@@ -144,7 +144,7 @@ function flipCard(card) {
 
 function flipBackCard(card) {
     card.style.background = ""
-    card.style.backgroundColor = "image/backgroundImage.jpg"
+    card.style.backgroundColor = "./image/backgroundImage.jpg"
 }
 
 function shuffle(cardList) {
