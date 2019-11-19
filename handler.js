@@ -85,6 +85,7 @@ function createCard(cardData, idCounter) {
                 flippedCard = undefined
                 winCounter = winCounter + 1
                 console.log("MATCH", winCounter)
+
             } else {
                 console.log("INGEN MATCH")
 
@@ -104,29 +105,31 @@ function createCard(cardData, idCounter) {
         }
 
         if (winCounter == 6) {
-           var winnerContainer = document.createElement("div")
-           winnerContainer.classList = "winnerContainer"
+            var winnerContainer = document.createElement("div")
+            winnerContainer.classList = "winnerContainer"
+            
+            var winnerText = document.createElement("h1")
+            winnerText.innerText = "CONGRATULATIONS!"
+            winnerText.classList = "h1"
+            
+            var winnerTextOne = document.createElement("h3")
+            winnerTextOne.innerText = "You Wan!"
+            winnerTextOne.classList = "h3"
+            
+            var startButton = document.createElement("button")
+            startButton.innerText = "Start Game"
+            startButton.classList = "button"
+            startButton.onclick = function() {
+                winCounter = 0
+                initSite()
+                
+            }
 
-           var winnerText = document.createElement("h1")
-           winnerText.innerText = "CONGRATULATIONS!"
-           winnerText.classList = "h1"
-
-           var winnerTextOne = document.createElement("h3")
-           winnerTextOne.innerText = "You Wan!"
-           winnerTextOne.classList = "h3"
-
-           var startButton = document.createElement("button")
-           startButton.innerText = "Start Game"
-           startButton.classList = "button"
-           startButton.onclick = function() {
-               initSite()
-           }
-           
-           console.log(winCounter)
-           winnerContainer.appendChild(startButton)
-           winnerContainer.appendChild(winnerTextOne)
-           winnerContainer.appendChild(winnerText)
-           document.body.appendChild(winnerContainer)
+            console.log(winCounter)
+            winnerContainer.appendChild(startButton)
+            winnerContainer.appendChild(winnerTextOne)
+            winnerContainer.appendChild(winnerText)
+            document.body.appendChild(winnerContainer)
         }
         
     }
@@ -141,7 +144,7 @@ function flipCard(card) {
 
 function flipBackCard(card) {
     card.style.background = ""
-    card.style.backgroundColor = "lightBlue"
+    card.style.backgroundColor = "image/backgroundImage.jpg"
 }
 
 function shuffle(cardList) {
